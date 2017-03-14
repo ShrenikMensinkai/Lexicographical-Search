@@ -9,22 +9,27 @@ import java.io.InputStreamReader;
 public class Program {
 	
 	public static void main(String[] args) throws IOException{
-//		String[] arr ={"aaa","def","bbb","abc","bcd","deg"};
-//		String[] arr ={"aaa","de","bbb","ab","bcd","deg"};
-//		String[] arr = {"aa","ab","ac","ad"	,"af","aj","ak"};
-//		String[] arr ={"aa","ab","ac","ad","da"};
-		String[] arrItems;// = {"ba","ca","cb","cx"};
+		String[] arrItems;
 		String[] param=null;
 		
-		String fileSource = args[0]+args[1];
-		int N = Integer.parseInt(args[2]);
-		FileInputStream fileInput = new FileInputStream(fileSource);;
+		if(args.length<2){
+			System.out.println("Please provide input file path and value of N");
+			return;
+		}
+		
+		
+		String fileSource = args[0];
+		int N = Integer.parseInt(args[1]);
+		FileInputStream fileInput = new FileInputStream(fileSource);
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInput));
 		
 		String line = bufferedReader.readLine();
 		param = line.split(",");
 		arrItems = new String[param.length];
-		
+		if(N>(param.length-1)){
+			System.out.println("Value of N should be less then " + (param.length));
+			return;
+		}
 		
 		//Split the elements from the given file and store it into the array
 		for(int paramIndex=0;paramIndex<param.length ;paramIndex++){
@@ -38,8 +43,6 @@ public class Program {
 				arrItems[paramIndex]= (param[paramIndex].substring(1,param[0].length()-2));
 			}
 		}
-		
-		
 		int arrLen = arrItems.length;
 		
 		
@@ -83,37 +86,30 @@ public class Program {
 				int lfI =iIndex-1,rfI=iIndex+1,tempN=0,strIndex=0;
 				System.out.print("The closest "+N+" items for "+arrItems[iIndex]+" is ");
 				while(lfI>=0 && rfI<=arrLen-1 && tempN<N){
-					//System.out.println();					
+									
 					while(strIndex < arrItems[lfI].length() || strIndex < arrItems[rfI].length()){
 						
 						if((arrItems[rfI].charAt(strIndex) - arrItems[iIndex].charAt(strIndex))==(arrItems[iIndex].charAt(strIndex)-arrItems[lfI].charAt(strIndex))){
-								
-								strIndex++;
-//								rfI++;tempN++;
-								
+							strIndex++;
 						}
 						else if( Math.abs((arrItems[rfI].charAt(strIndex)-arrItems[iIndex].charAt(strIndex))) < Math.abs((arrItems[iIndex].charAt(strIndex)-arrItems[lfI].charAt(strIndex)))){
 							System.out.print(arrItems[rfI]+",");
 							rfI++;tempN++;
 							strIndex=0;
 							break;
-							
 						}
 						else if( Math.abs((arrItems[rfI].charAt(strIndex)-arrItems[iIndex].charAt(strIndex))) > Math.abs(arrItems[iIndex].charAt(strIndex)-arrItems[lfI].charAt(strIndex))){
 							System.out.print(arrItems[lfI]+",");
 							lfI--;tempN++;
 							strIndex=0;
 							break;
-							//continue;
 						}
 					}
-					 if(lfI>=0 && rfI<arrLen && arrItems[lfI].length()==arrItems[rfI].length() && strIndex==arrItems[rfI].length()){
+					if(lfI>=0 && rfI<arrLen && arrItems[lfI].length()==arrItems[rfI].length() && strIndex==arrItems[rfI].length()){
 						 System.out.print(arrItems[rfI]+",");
 							rfI++;tempN++;
 							strIndex=0;
-//							break;
 					 }
-					
 					if(lfI==-1){
 						while(tempN<N){
 							System.out.print(arrItems[rfI]+",");
@@ -126,7 +122,6 @@ public class Program {
 							lfI--;tempN++;
 						}
 					}
-
 				}
 			}
 		}
