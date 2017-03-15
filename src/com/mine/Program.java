@@ -15,8 +15,7 @@ public class Program {
 		if(args.length<2){
 			System.out.println("Please provide input file path and value of N");
 			return;
-		}
-		
+		}		
 		
 		String fileSource = args[0];
 		int N = Integer.parseInt(args[1]);
@@ -26,21 +25,21 @@ public class Program {
 		String line = bufferedReader.readLine();
 		param = line.split(",");
 		arrItems = new String[param.length];
-		if(N>(param.length-1)){
-			System.out.println("Value of N should be less then " + (param.length));
+		if(N>(param.length-1)||N<1){
+			System.out.println("Value of N should be between then 0 and" + (param.length)+ "for the given Input");
 			return;
 		}
 		
-		//Split the elements from the given file and store it into the array
+		//Split the elements from the given file,convert to lower case and store it into the array
 		for(int paramIndex=0;paramIndex<param.length ;paramIndex++){
 			if(paramIndex==0){
-				arrItems[paramIndex]= (param[paramIndex].substring(2,param[paramIndex].length()-2));
+				arrItems[paramIndex]= (param[paramIndex].substring(2,param[paramIndex].length()-1)).toLowerCase();
 			}
 			else if(paramIndex==param.length-1){
-				arrItems[paramIndex]= (param[paramIndex].substring(1,param[paramIndex].length()-3));
+				arrItems[paramIndex]= (param[paramIndex].substring(1,param[paramIndex].length()-2)).toLowerCase();
 			}
 			else{
-				arrItems[paramIndex]= (param[paramIndex].substring(1,param[0].length()-2));
+				arrItems[paramIndex]= (param[paramIndex].substring(1,param[paramIndex].length()-1)).toLowerCase();
 			}
 		}
 		int arrLen = arrItems.length;
@@ -57,13 +56,12 @@ public class Program {
 			}
 		}
 		
-		// Displays the sorted Array
+		// Sorted Array for the reference
 		for (String string : arrItems){
 			System.out.println(string);
 		}
 		
 		// Algorithm Implementation 
-		
 		
 		for(int iIndex = 0;iIndex<arrLen;iIndex++){
 			
